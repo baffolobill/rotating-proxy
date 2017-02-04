@@ -96,17 +96,20 @@ module Service
 
     def start
       super
+      countries = ENV['countries']
       self.class.fire_and_forget(executable,
         "--SocksPort #{port}",
 	"--ControlPort #{control_port}",
         "--NewCircuitPeriod 15",
 	"--MaxCircuitDirtiness 15",
+	countries ? "--ExitNodes #{countries}" : "",
 	"--UseEntryGuards 0",
 	"--UseEntryGuardsAsDirGuards 0",
 	"--CircuitBuildTimeout 5",
 	"--ExitRelay 0",
 	"--RefuseUnknownExits 0",
 	"--ClientOnly 1",
+	"--StrictNodes 1",
 	"--AllowSingleHopCircuits 1",
         "--DataDirectory #{data_directory}",
         "--PidFile #{pid_file}",
